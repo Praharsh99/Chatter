@@ -96,20 +96,20 @@ io.on('connection', (socket) => {
           .to(process.env.ROOM_ID)
           .emit(
             'new-voice-message',
-            audioFiles.audioUrl,
+            audioFiles.audioBlob,
             userObject.username,
             Date.now()
           );
       });
 
       // This is fired by the client when new image message is created
-      socket.on('new-image-message', (imageFiles) => {
+      socket.on('new-image-message', (imageFiles, isFile) => {
         // Sending this voice message to others
         socket
           .to(process.env.ROOM_ID)
           .emit(
             'new-image-message',
-            imageFiles.imageUrl,
+            isFile ? imageFiles.blob : imageFiles.imageUrl,
             userObject.username,
             Date.now()
           );

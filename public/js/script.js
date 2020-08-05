@@ -92,7 +92,7 @@ attachBtn.onclick = () => {
 
       addNewMessage(imageUrl, USERNAME, Date.now(), true, 'image');
 
-      socket.emit('new-image-message', { blob, imageUrl });
+      socket.emit('new-image-message', { blob, imageUrl }, true);
     }
   };
 };
@@ -141,7 +141,7 @@ gifContentElement.onclick = (event) => {
 
   if (gif.tagName === 'IMG') {
     addNewMessage(gif.src, USERNAME, Date.now(), true, 'image');
-    socket.emit('new-image-message', { blob: null, imageUrl: gif.src });
+    socket.emit('new-image-message', { blob: null, imageUrl: gif.src }, false);
   }
 };
 
@@ -461,7 +461,7 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
     const audioElement = document.createElement('audio');
 
     audioElement.className = 'audio-msg';
-    audioElement.src = message;
+    audioElement.src = URL.createObjectURL(message);
     audioElement.controls = true;
     if (ownMsg) audioElement.play();
 
@@ -471,7 +471,7 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
     const imgElement = document.createElement('img');
 
     imgElement.className = 'image-msg';
-    imgElement.src = message;
+    imgElement.src = URL.createObjectURL(message);
 
     chatMessage.style.backgroundColor = 'transparent';
     chatMessage.appendChild(imgElement);
