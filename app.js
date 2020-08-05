@@ -111,7 +111,8 @@ io.on('connection', (socket) => {
             'new-image-message',
             isFile ? imageFiles.blob : imageFiles.imageUrl,
             userObject.username,
-            Date.now()
+            Date.now(),
+            isFile
           );
       });
 

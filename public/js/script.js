@@ -293,10 +293,15 @@ socket.on('new-chat-message', (message, userWhoSent, whenSent) => {
 });
 
 socket.on('new-voice-message', (audio, userWhoSent, whenSent) => {
+  audio = URL.createObjectURL(audio);
+
   addNewMessage(audio, userWhoSent, whenSent, false, 'audio');
 });
 
-socket.on('new-image-message', (image, userWhoSent, whenSent) => {
+socket.on('new-image-message', (image, userWhoSent, whenSent, isFile) => {
+  if (isFile) {
+    image = URL.createObjectURL(image);
+  }
   addNewMessage(image, userWhoSent, whenSent, false, 'image');
 });
 
@@ -461,8 +466,9 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
     const audioElement = document.createElement('audio');
 
     audioElement.className = 'audio-msg';
-    audioElement.src = URL.createObjectURL(message);
+    audioElement.src = message;
     audioElement.controls = true;
+
     if (ownMsg) audioElement.play();
 
     chatMessage.style.backgroundColor = 'transparent';
@@ -471,7 +477,7 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
     const imgElement = document.createElement('img');
 
     imgElement.className = 'image-msg';
-    imgElement.src = URL.createObjectURL(message);
+    imgElement.src = message;
 
     chatMessage.style.backgroundColor = 'transparent';
     chatMessage.appendChild(imgElement);
