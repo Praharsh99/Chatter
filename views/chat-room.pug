@@ -1,0 +1,60 @@
+extends base
+
+block stylesheets
+  link(rel='stylesheet' href='css/style.css')
+
+block content
+  //- Container for whole messaging, chat members and messages
+  .main-container
+    //- Chat section, contains prev messages and chat input bar
+    .chat-container
+      //- Container for all the messages from people
+      .msg-container
+        .chats
+
+      //- Form for message input
+      form#msg-typing-form.msg-typing-form
+        .input-container
+          input#new-msg(type='text' placeholder='Say something...')
+
+          .typing-info
+
+        //- Contains all the buttons (emojibutton, sendbutton)
+        .buttons-container
+
+          button#attach-btn.attach-btn(type='button' title='Choose an image')
+            img(src='/svg/attach.svg' alt='Attachments')
+
+          .emoji-board-container
+            //- Emoji board
+            #emoji-board.emoji-board.hidden-class
+              #emoji-header.emoji-header
+                img(src='./../svg/emoji-bordered.svg' alt='Emojis' id='emoji-tab')
+                img(src='./../svg/gif-bordered.svg' alt='Gifs' id='gif-tab')
+              .emoji-gif-container
+                #emoji-content.emoji-content
+                #gif-content.gif-content.shift-right
+                  input(type='text' class='gif-search' id='gif-search' placeholder='Search gifs...')
+
+            //- Emoji button to toggle emoji board
+            button#emoji-btn.emoji-btn(type='button' title='Choose emoji')
+              img(src='/svg/emoji.svg' alt='Emoji')
+          
+          //- Send voice messages
+          button#record-voice.record-voice(type='button' title='Send voice message')
+            img(src='/svg/microphone.svg' alt='Microphone')
+            
+
+          //- Button to send message
+          button#send-btn.send-btn(title='Send message')
+            img(src='/svg/send.svg' alt='Send')
+
+    //- Section for att the members in the room
+    .people-container
+
+  .voice-recording-elements.no-display
+    #progress-bar.progress-bar 
+      
+block scripts
+  script(src='/socket.io/socket.io.js')
+  script(src='js/script.js' type='module')

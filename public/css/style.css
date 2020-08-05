@@ -1,0 +1,987 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Raleway:ital,wght@0,300;0,400;1,100&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  background: #08192b;
+}
+
+/* Modal Styles */
+/* DIV (modal-card) */
+.modal-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* white modal card */
+.modal-card {
+  width: 500px;
+  height: 320px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 3rem 1rem;
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
+}
+
+/* This style is for the profile picture thing */
+.profile-pic-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+  width: 85px;
+  height: 85px;
+  padding: 0.2rem;
+  border: 2px solid rgba(217, 217, 217, 0.7);
+  border-radius: 50%;
+  outline: none;
+  overflow: hidden;
+}
+
+/* Profile picture black background */
+.profile-photo-edit-btn-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.profile-photo-edit-btn-container:hover {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Camera btn in profile picture edit styles */
+.profile-photo-edit-btn {
+  width: 14px;
+  height: 14px;
+}
+
+/* Actual profile picture visible to the user */
+.profile-pic {
+  width: 125%;
+  height: 125%;
+  border-radius: 100%;
+}
+
+/* This style is for the profile pictures option container */
+/* relative to modal-card div */
+.profile-picture-options-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  padding: 1rem 2rem;
+  height: 100px;
+  border-radius: 1rem;
+  z-index: 11;
+  top: -35%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  animation: fadeIn 0.4s linear;
+}
+
+/* This style is for each profile image in options */
+.profile-picture-option-image {
+  cursor: pointer;
+  width: 85px;
+  height: 85px;
+  flex-basis: 1;
+  border-radius: 50%;
+}
+
+/* Whole USERNAME input section */
+.name-section {
+  width: 80%;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.name-input {
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2.2rem;
+  width: 100%;
+  height: 100%;
+  bottom: -5px;
+  left: 0;
+  border: none;
+  outline: none;
+}
+
+.name-input::placeholder {
+  color: transparent;
+}
+
+.name-label {
+  position: absolute;
+  pointer-events: none;
+  font-family: 'Open Sans', sans-serif;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1.5px solid rgb(0, 0, 0);
+}
+
+.label-content {
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  font-size: 4rem;
+  transition: transform 0.3s ease;
+  transform-origin: left;
+}
+
+.name-label::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: -2px;
+  left: 0;
+  transform: translateX(-100%);
+  transition: all 0.2s linear;
+  border-bottom: 3px solid rgb(38, 128, 231);
+}
+
+.name-section .name-input:focus + .name-label .label-content,
+.name-section .name-input:not(:placeholder-shown) + .name-label .label-content {
+  transform: translateY(-2.5rem) scale(0.4);
+  color: rgb(38, 128, 231);
+}
+
+.name-section .name-input:focus + .name-label::before,
+.name-section .name-input:not(:placeholder-shown) + .name-label::before {
+  transform: translateX(0);
+}
+
+/* Alert messages to show errors in inputs */
+.alert-msg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  color: #e72626;
+  font-family: Open Sans, sans-serif;
+  font-size: 1rem;
+  align-self: flex-start;
+  margin-left: 3.8rem;
+}
+
+.done-btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.4rem;
+  font-family: Open Sans, sans-serif;
+  padding: 1.2rem 2.5rem;
+  text-align: center;
+  color: #fff;
+  background: rgb(38, 128, 231);
+  align-self: flex-end;
+  margin-right: 5rem;
+  transition: background 0.1s ease;
+  outline: none;
+}
+
+.done-btn:hover {
+  background: rgb(30, 102, 185);
+}
+
+/* END OF MODAL STYLES */
+
+/* HEADER STYLES */
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(45deg, #3ad38a, #4195df, #953dcc, #d52988);
+  height: 12vh;
+  width: 100vw;
+  padding: 1rem 5rem;
+}
+
+header img {
+  border-radius: 1rem;
+}
+
+/* THE MAIN BODY CONTAINER */
+/* DIV (messages, people) */
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 88vh;
+}
+
+/* CHAT SECTION */
+/* DIV (all messages, form) */
+.chat-container {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Previous messages container */
+/* DIV (all the chat messages) */
+.msg-container {
+  width: 105%;
+  height: 85%;
+  padding: 1rem 5rem;
+  box-shadow: inset 0 -8px 20px 5px rgba(0, 0, 0, 0.2);
+}
+
+.chats {
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.chats::-webkit-scrollbar {
+  width: 3.5px;
+  background-color: transparent;
+}
+
+.chats::-webkit-scrollbar-thumb {
+  background-color: rgba(218, 218, 218, 0.7);
+  border-radius: 1rem;
+}
+
+.chats::-webkit-scrollbar-track {
+  background-color: rgba(118, 118, 118, 0.2);
+  border-radius: 1rem;
+}
+
+/* This holds the actual message */
+/* DIV(.chat-msg-others, .chat-msg-mine) */
+.chat-msg-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-family: Open Sans, sans-serif;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* The info abt the user who sent the message */
+/* SPAN ELEMENT */
+.chat-msg-user-info {
+  font-size: 1rem;
+  color: whitesmoke;
+  background: transparent;
+  padding-left: 2px;
+}
+
+/* The chat messages from others */
+/* SPAN ELEMENT */
+.chat-msg-others {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: whitesmoke;
+  color: #333;
+  max-width: 60%;
+  text-align: left;
+  border-radius: 1rem;
+  margin-top: 5px;
+  align-self: flex-start;
+}
+
+/* The chat messages by me */
+/* SPAN ELEMENT */
+.chat-msg-mine {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  max-width: 60%;
+  margin-top: 5px;
+  text-align: left;
+  background: rgb(76, 76, 76);
+  align-self: flex-end;
+  color: #fff;
+}
+
+/* Some chat notofication */
+/* SPAN ELEMENT */
+.chat-info {
+  font-size: 1.4rem;
+  color: #eee;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+/* Styles for audio message */
+.audio-msg {
+  outline: none;
+}
+
+/* Styles for image messages */
+.image-msg {
+  width: 300px;
+  height: 250px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Chat input form */
+/* FORM ELEMENT */
+.msg-typing-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 15%;
+  border-top: 0.05px solid rgb(212, 212, 212, 0.3);
+}
+
+/* Input element, buttons in the chat input form */
+/* DIV (INPUT, BUTTONS) */
+.input-container {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* This style is to display "praharsh is typing... someone is typing..." information */
+/* DIV(DIV) */
+.typing-info {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  height: 10%;
+  justify-content: flex-start;
+  align-items: center;
+  color: rgb(194, 194, 194);
+  font-family: Open Sans, sans-serif;
+  font-size: 1rem;
+  text-shadow: 0px 0px 3px #a5a5a5, 0px 0px 5px #a6a6a6;
+}
+
+/* Div for individual info, i mean for each "user" is typing */
+.typing-info .is-typing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.typing-info .is-typing-container:last-child {
+  margin-right: 0 !important;
+}
+
+.typing-info .is-typing-container div {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 4px;
+  margin: 0 3px;
+  border-radius: 50%;
+  animation: bounce 0.6s linear infinite alternate;
+}
+
+.is-typing-container > div:nth-child(1) {
+  margin-left: 8px;
+}
+
+.is-typing-container > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.is-typing-container > div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Message input area */
+/* INPUT ELEMENT */
+.input-container input {
+  width: 90%;
+  height: 50%;
+  font-size: 1.3rem;
+  font-family: Raleway, sans-serif;
+  letter-spacing: 1px;
+  color: #fff;
+  background: transparent;
+  border: 0.2px solid rgba(212, 212, 212, 0.1);
+  border-radius: 3rem;
+  padding: 1rem 2rem;
+  outline: none;
+  transition: all 0.2s linear;
+  box-shadow: 0 0 0 rgba(128, 128, 128, 0.3);
+  overflow: hidden;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.input-container input::placeholder {
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  color: rgb(116, 116, 116);
+}
+
+.input-container input:focus {
+  border-color: transparent;
+  box-shadow: 0 0 20px 1px rgba(128, 128, 128, 0.35);
+}
+
+.input-container input:focus::placeholder {
+  color: transparent;
+}
+
+/* Container for all buttons */
+/* DIV (BUTTONS) */
+.buttons-container {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem 1rem 1rem;
+}
+
+/* Styles for emoji board container */
+/* DIV(.emoji-board, .emoji-button) */
+.emoji-board-container {
+  position: relative;
+}
+
+/* Emoji Board */
+/* DIV */
+.emoji-board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  background: #0f263f;
+  padding: 0.5rem 1rem 1rem 1rem;
+  border: 0.05px solid rgb(212, 212, 212, 0.3);
+  border-radius: 4px;
+  height: 350px;
+  width: 350px;
+  bottom: 100%;
+  left: -150px;
+  animation: fadeIn 0.15s linear;
+}
+
+/* Header for emoji and gifs */
+.emoji-header {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 0.05px solid rgb(212, 212, 212, 0.3);
+}
+
+.emoji-header img {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+/* Emoji and Gifs Container */
+.emoji-gif-container {
+  width: 100%;
+  height: 90%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shifting left and right classes */
+.shift-right {
+  transform: translateX(100%);
+  animation: shift-right 0.2s linear;
+}
+
+.shift-left {
+  transform: translateX(-100%);
+  animation: shift-left 0.2s linear;
+}
+/* Emoji-gif container  */
+.emoji-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #fff;
+  font-family: Open Sans, sans-serif;
+  font-size: 1.4rem;
+  text-align: center;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.emoji-content::-webkit-scrollbar {
+  width: 3.5px;
+  background-color: transparent;
+}
+
+.emoji-content::-webkit-scrollbar-thumb {
+  background-color: rgba(218, 218, 218, 0.7);
+  border-radius: 1rem;
+}
+
+.emoji-content::-webkit-scrollbar-track {
+  background-color: rgba(118, 118, 118, 0.2);
+  border-radius: 1rem;
+}
+
+/* Actual emoji icon */
+/* IMG */
+.emoji {
+  user-select: none;
+  cursor: pointer;
+  height: 10%;
+  width: 10%;
+  font-size: 22px;
+  margin: 2%;
+}
+
+/* Gifs container */
+/* DIV(search, gifs) */
+.gif-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-family: Open Sans, sans-serif;
+  font-size: 1.4rem;
+  text-align: center;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.gif-content::-webkit-scrollbar {
+  width: 3.5px;
+  background-color: transparent;
+}
+
+.gif-content::-webkit-scrollbar-thumb {
+  background-color: rgba(218, 218, 218, 0.7);
+  border-radius: 1rem;
+}
+
+.gif-content::-webkit-scrollbar-track {
+  background-color: rgba(118, 118, 118, 0.2);
+  border-radius: 1rem;
+}
+
+/* Gif search bar */
+.gif-search {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  width: 100%;
+  height: 25px;
+  font-family: Open Sans, sans-serif;
+  font-size: 1.2rem;
+  background: #fff;
+  padding: 1rem 2rem;
+  letter-spacing: 1px;
+}
+
+.gif-search::placeholder {
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Actual gif image */
+.gif-img {
+  cursor: pointer;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin: 1rem 0;
+}
+
+/* SEND BUTTON */
+/* BUTTON */
+.buttons-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 1rem;
+  outline: none;
+  color: #fff;
+  transition: transform 0.05s linear;
+}
+
+/* The svg's inside the buttons */
+.buttons-container button img {
+  width: 26px;
+  height: 26px;
+}
+
+.record-voice {
+  z-index: 20;
+}
+
+/* Voice recording styles */
+/* Modal container */
+.voice-recording-elements {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s linear;
+}
+
+/* Voice recording btn container */
+.microphone-img-container {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgb(214, 23, 71);
+  overflow: hidden;
+  box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s linear;
+  margin-bottom: 2rem;
+}
+
+.microphone-img-container:hover {
+  filter: brightness(110%);
+}
+
+.microphone-img-container:active {
+  transform: translateY(2px);
+}
+
+.microphone-img-container:disabled {
+  filter: brightness(30%);
+}
+
+/* Microphone svg */
+.microphone-img-container img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Styles for the progress bar to display the time for recoding */
+.progress-bar {
+  position: relative;
+  width: 200px;
+  height: 3px;
+  border-radius: 10px;
+  margin-top: 2rem;
+  background: #333;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: '';
+  background: rgb(8, 196, 71);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  animation: progress 3s linear;
+}
+
+/* PEOPLES CONTAINER */
+/* Container for all the details of the members in the chat*/
+.people-container {
+  height: 100%;
+  width: 20%;
+  border-left: 0.05px solid rgb(212, 212, 212, 0.3);
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+
+.people-container::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.people-container::-webkit-scrollbar-thumb {
+  background-color: rgba(218, 218, 218, 0.7);
+  border-radius: 1rem;
+}
+
+.people-container::-webkit-scrollbar-track {
+  background-color: rgba(118, 118, 118, 0.2);
+  border-radius: 1rem;
+}
+
+.user-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.user-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  overflow: hidden;
+}
+
+.peoples-profile-img-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.peoples-profile-img-container img {
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+}
+
+.user-name {
+  font-family: Raleway;
+  width: 70%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  color: #fff;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+/* EVERYWHERE USED CLASSES */
+.no-display {
+  display: none;
+}
+
+.hidden-class {
+  visibility: hidden;
+}
+
+.wrong-input {
+  color: #e72626 !important;
+}
+
+.wrong-input:before {
+  color: #e72626;
+  border-color: #e72626;
+}
+
+.wrong-input-animate {
+  animation: shake 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.loader {
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 2px solid #1a4461; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+/* ANIMATIONS */
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(6px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+@keyframes bounce {
+  to {
+    opacity: 0.2;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shift-right {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shift-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
