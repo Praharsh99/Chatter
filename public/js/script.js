@@ -293,9 +293,10 @@ socket.on('new-chat-message', (message, userWhoSent, whenSent) => {
 });
 
 socket.on('new-voice-message', (audio, userWhoSent, whenSent) => {
-  audio = URL.createObjectURL(audio);
-
-  addNewMessage(audio, userWhoSent, whenSent, false, 'audio');
+  const audioUrl = URL.createObjectURL(audio);
+  const audio1 = new Audio(audio);
+  audio1.play();
+  addNewMessage(audioUrl, userWhoSent, whenSent, false, 'audio');
 });
 
 socket.on('new-image-message', (image, userWhoSent, whenSent, isFile) => {
@@ -460,8 +461,11 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
 
   const date = new Date(whenSent);
 
+  // If input is a text
   if (msgType === 'text') {
     chatMessage.textContent = message;
+
+    // When input is a audio
   } else if (msgType === 'audio') {
     const audioElement = document.createElement('audio');
 
@@ -473,6 +477,8 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
 
     chatMessage.style.backgroundColor = 'transparent';
     chatMessage.appendChild(audioElement);
+
+    // When input is an image
   } else if (msgType === 'image') {
     const imgElement = document.createElement('img');
 
