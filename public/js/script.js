@@ -293,17 +293,19 @@ socket.on('new-chat-message', (message, userWhoSent, whenSent) => {
 });
 
 socket.on('new-voice-message', (audio, userWhoSent, whenSent) => {
-  const audioUrl = URL.createObjectURL(audio);
-  const audio1 = new Audio(audio);
-  audio1.play();
+  const audioBlob = new Blob([audio]);
+  const audioUrl = URL.createObjectURL(audioBlob);
   addNewMessage(audioUrl, userWhoSent, whenSent, false, 'audio');
 });
 
 socket.on('new-image-message', (image, userWhoSent, whenSent, isFile) => {
+  let imageUrl = image;
   if (isFile) {
-    image = URL.createObjectURL(image);
+    const imageBlob = new Blob([image]);
+    imageUrl = URL.createObjectURL(imageBlob);
   }
-  addNewMessage(image, userWhoSent, whenSent, false, 'image');
+
+  addNewMessage(imageUrl, userWhoSent, whenSent, false, 'image');
 });
 
 // --------------------------------------------------------------------------------
