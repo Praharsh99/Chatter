@@ -357,7 +357,7 @@ header img {
   text-align: left;
   background: rgb(76, 76, 76);
   align-self: flex-end;
-  color: #fff;
+  color: rgb(255, 255, 255, 0.8);
 }
 
 /* Some chat notofication */
@@ -464,7 +464,7 @@ header img {
   font-size: 1.3rem;
   font-family: Raleway, sans-serif;
   letter-spacing: 1px;
-  color: #fff;
+  color: rgb(255, 255, 255, 0.8);
   background: transparent;
   border: 0.2px solid rgba(212, 212, 212, 0.1);
   border-radius: 3rem;
@@ -844,7 +844,7 @@ header img {
   display: flex;
   align-items: center;
   font-size: 1.6rem;
-  color: #fff;
+  color: rgb(255, 255, 255, 0.8);
   overflow: hidden;
   word-break: break-all;
 }

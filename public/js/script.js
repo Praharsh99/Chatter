@@ -29,7 +29,7 @@ const EMOJI_API_URL =
   'https://emoji-api.com/emojis?access_key=3c0443d6098fa79a5b8164a4c7851ed6edf7ddd3';
 let USERNAME = null;
 let isTyping = false;
-let limit = 10;
+let limit = 15;
 
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 let recordingFunctions, alreadyStopped;
@@ -491,7 +491,7 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
     chatMessage.appendChild(imgElement);
   }
 
-  chatMsgUserInfo.textContent = `${userWhoSent} | ${date.getHours()}: ${date.getMinutes()}`;
+  chatMsgUserInfo.textContent = `${userWhoSent} | ${date.getHours()}:${date.getMinutes()}`;
 
   chatMsgContainer.appendChild(chatMsgUserInfo);
   chatMsgContainer.appendChild(chatMessage);
