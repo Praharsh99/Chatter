@@ -1,5 +1,6 @@
 import { displayTheModal } from './modalCreator.js';
 import { recordVoice, sleep } from './recordVoice.js';
+import { getOwnAudioElement } from './audioElementCreation.js';
 
 var socket = io();
 
@@ -108,10 +109,8 @@ emojiHeader.onclick = () => {
 
   if (clickedTarget.tagName === 'IMG') {
     clickedTarget.id === 'emoji-tab'
-      ? (emojiContentElement.classList.remove('shift-left'),
-        gifContentElement.classList.add('shift-right'))
-      : (emojiContentElement.classList.add('shift-left'),
-        gifContentElement.classList.remove('shift-right'));
+      ? gifContentElement.classList.add('shift-right')
+      : gifContentElement.classList.remove('shift-right');
   }
 };
 
@@ -141,6 +140,11 @@ gifContentElement.onclick = (event) => {
 
   if (gif.tagName === 'IMG') {
     addNewMessage(gif.src, USERNAME, Date.now(), true, 'image');
+
+    if (!emojiBoard.classList.contains('hidden-class')) {
+      emojiBoard.classList.add('hidden-class');
+    }
+
     socket.emit('new-image-message', { blob: null, imageUrl: gif.src }, false);
   }
 };
@@ -450,7 +454,13 @@ const getGiphyContent = async (endpoint, query) => {
 };
 
 // Adds new message to DOM
-const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
+const addNewMessage = async (
+  message,
+  userWhoSent,
+  whenSent,
+  ownMsg,
+  msgType
+) => {
   // Add the new message to the chats container
   const chatMsgContainer = document.createElement('div');
   const chatMsgUserInfo = document.createElement('span');
@@ -463,24 +473,19 @@ const addNewMessage = (message, userWhoSent, whenSent, ownMsg, msgType) => {
 
   const date = new Date(whenSent);
 
-  // If input is a text
+  // If input is a text---------
   if (msgType === 'text') {
     chatMessage.textContent = message;
 
-    // When input is a audio
+    // When input is a audio------------
   } else if (msgType === 'audio') {
-    const audioElement = document.createElement('audio');
-
-    audioElement.className = 'audio-msg';
-    audioElement.src = message;
-    audioElement.controls = true;
-
-    if (ownMsg) audioElement.play();
+    // Adding own controls for audio messages
+    const customAudioElement = await getOwnAudioElement(message);
 
     chatMessage.style.backgroundColor = 'transparent';
-    chatMessage.appendChild(audioElement);
+    chatMessage.appendChild(customAudioElement);
 
-    // When input is an image
+    // When input is an image-------------
   } else if (msgType === 'image') {
     const imgElement = document.createElement('img');
 
